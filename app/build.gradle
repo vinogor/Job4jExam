@@ -5,11 +5,11 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "ru.job4j.exam"
-        minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        applicationId "ru.job4j.exam" // имя пакета приложения, его идентификатор. У каждого приложения должно быть уникальное имя пакета.
+        minSdkVersion 19 // минимальная версия Android, на которой будет работать приложение
+        targetSdkVersion 29 // максимальная версия SDK, на которой приложение гарантированно будет работать
+        versionCode 1 // версия приложения. При выпуске новой версии всегда увеличивайте версию, иначе Google Play не даст выгрузить её.
+        versionName "1.0" // текстовый вариант версии приложения. Тут можно писать что угодно.
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

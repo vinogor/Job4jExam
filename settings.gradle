@@ -1,2 +1,2 @@
 rootProject.name='Job4jExam'
-include ':app'
+include ':app' // модуль, который будет включён в сборку
