@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="180dp"
-                android:text="TextView" />
+                android:text="@string/tv_select_area" />
 
             <Spinner
                 android:id="@+id/spinner"
@@ -41,14 +41,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="180dp"
-                android:text="Имя объекта" />
+                android:text="@string/tv_object_name" />
 
             <EditText
                 android:id="@+id/editText_object_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Имя объекта"
+                android:hint="@string/et_hint_object_name"
                 android:inputType="textPersonName"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -63,14 +63,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="180dp"
-                android:text="Адрес" />
+                android:text="@string/tv_address" />
 
             <EditText
                 android:id="@+id/editText_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Адрес"
+                android:hint="@string/et_hint_address"
                 android:inputType="textPersonName"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -85,14 +85,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="180dp"
-                android:text="ФИО заказчика" />
+                android:text="@string/tv_full_name" />
 
             <EditText
                 android:id="@+id/editText_full_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="ФИО заказчика"
+                android:hint="@string/et_hint_full_name"
                 android:inputType="textPersonName"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -107,14 +107,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="180dp"
-                android:text="Температура воздуха" />
+                android:text="@string/tv_temperature" />
 
             <EditText
                 android:id="@+id/editText_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Температура воздуха"
+                android:hint="@string/et_hint_temperature"
                 android:inputType="textPersonName"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -129,14 +129,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="180dp"
-                android:text="Влажность воздуха" />
+                android:text="@string/tv_humidity" />
 
             <EditText
                 android:id="@+id/editText_humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Влажность воздуха"
+                android:hint="@string/et_hint_humidity"
                 android:inputType="textPersonName"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -151,14 +151,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="180dp"
-                android:text="Атмосферное давление" />
+                android:text="@string/tv_pressure" />
 
             <EditText
                 android:id="@+id/editText_pressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Атмосферное давление"
+                android:hint="@string/et_hint_pressure"
                 android:inputType="textPersonName"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -173,14 +173,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="180dp"
-                android:text="Номер отчета" />
+                android:text="@string/tv_report_number" />
 
             <EditText
                 android:id="@+id/editText_report_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Номер отчета"
+                android:hint="@string/et_hint_report_number"
                 android:inputType="textPersonName"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -195,14 +195,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Назад" />
+                android:text="@string/btn_back" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Далее" />
+                android:text="@string/btn_forward" />
         </LinearLayout>
 
     </LinearLayout>

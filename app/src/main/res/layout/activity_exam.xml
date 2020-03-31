@@ -6,9 +6,11 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello, Aleksandr Andreev!" />
+        android:text="@string/hello"
+        style="@style/CustomText"/>
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -19,25 +21,25 @@
             android:id="@+id/radioButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="@string/rb_1" />
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="@string/rb_2" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="@string/rb_3" />
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="@string/rb_4" />
 
     </RadioGroup>
 
@@ -51,13 +53,13 @@
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="назад" />
+            android:text="@string/btn_back" />
 
         <Button
             android:id="@+id/button_forward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="далее" />
+            android:text="@string/btn_forward" />
     </LinearLayout>
 
 </LinearLayout>

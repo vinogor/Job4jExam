@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Job4jExam</string>
+
+    <string name="hello">Hello, Aleksandr Andreev!</string>
+    <string name="rb_1">answer 1</string>
+    <string name="rb_2">answer 2</string>
+    <string name="rb_3">answer 3</string>
+    <string name="rb_4">answer 4</string>
+    <string name="btn_back">back</string>
+    <string name="btn_forward">forward</string>
+
+    <string name="tv_select_area">Select area</string>
+    <string name="domain_prompt">Select area</string>
+    <string-array name="domain_arrays">
+        <item>Select area</item>
+        <item>Moscow</item>
+        <item>SPb</item>
+    </string-array>
+
+    <string name="tv_object_name">Object name</string>
+    <string name="et_hint_object_name">Object name</string>
+    <string name="tv_address">Address</string>
+    <string name="et_hint_address">Address</string>
+    <string name="tv_full_name">Customer full name</string>
+    <string name="et_hint_full_name">Customer full name</string>
+    <string name="tv_temperature">Air temperature</string>
+    <string name="et_hint_temperature">Air temperature</string>
+    <string name="tv_humidity">Air humidity</string>
+    <string name="et_hint_humidity">Air humidity</string>
+    <string name="tv_pressure">Atmosphere pressure</string>
+    <string name="et_hint_pressure">Atmosphere pressure</string>
+    <string name="tv_report_number">Report number</string>
+    <string name="et_hint_report_number">Report number</string>
+</resources>

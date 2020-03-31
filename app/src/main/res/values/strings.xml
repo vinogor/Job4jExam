@@ -1,13 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Job4jExam</string>
+
+    <string name="hello">Привет, Александр Андреев!</string>
+    <string name="rb_1">ответ 1</string>
+    <string name="rb_2">ответ 2</string>
+    <string name="rb_3">ответ 3</string>
+    <string name="rb_4">ответ 4</string>
+    <string name="btn_back">назад</string>
+    <string name="btn_forward">далее</string>
+
+    <string name="tv_select_area">Выберите область</string>
     <string name="domain_prompt">Выберите область</string>
-
-<!--    эта строка нигде не использовалась -->
-<!--    <string name="exp_date">Дата проведения испытания</string>-->
-
     <string-array name="domain_arrays">
         <item>Выберите область</item>
         <item>Московская</item>
         <item>СПб</item>
     </string-array>
+
+    <string name="tv_object_name">Имя объекта</string>
+    <string name="et_hint_object_name">Имя объекта</string>
+    <string name="tv_address">Адрес</string>
+    <string name="et_hint_address">Адрес</string>
+    <string name="tv_full_name">ФИО заказчика</string>
+    <string name="et_hint_full_name">ФИО заказчика</string>
+    <string name="tv_temperature">Температура воздуха</string>
+    <string name="et_hint_temperature">Температура воздуха</string>
+    <string name="tv_humidity">Влажность воздуха</string>
+    <string name="et_hint_humidity">Влажность воздуха</string>
+    <string name="tv_pressure">Атмосферное давление</string>
+    <string name="et_hint_pressure">Атмосферное давление</string>
+    <string name="tv_report_number">Номер отчета</string>
+    <string name="et_hint_report_number">Номер отчета</string>
 </resources>
