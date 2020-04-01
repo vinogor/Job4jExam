@@ -53,7 +53,6 @@ public class ExamActivity extends AppCompatActivity {
     private RadioGroup variants;
     private TextView tvQuestion;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,62 +66,15 @@ public class ExamActivity extends AppCompatActivity {
         tvQuestion = findViewById(R.id.question);
 
         buttonPrevious.setEnabled(false);
-        buttonNext.setEnabled(false);
         buttonCheck.setEnabled(false);
+        buttonNext.setEnabled(false);
+
+        buttonNext.setOnClickListener(this::btnNext);
+        buttonCheck.setOnClickListener(this::btnCheck);
+        buttonPrevious.setOnClickListener(this::btnPrevious);
+        variants.setOnCheckedChangeListener(this::rBtnChange);
 
         this.fillForm();
-
-        // настраиваем поведение кнопки ДАЛЕЕ
-        buttonNext.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        oldPosition = position;
-                        position++;
-                        fillForm();
-                    }
-                }
-        );
-
-        // настраиваем поведение кнопки ПРОВЕРИТЬ
-        buttonCheck.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        showAnswer();
-                    }
-                }
-        );
-
-        // настраиваем поведение кнопки НАЗАД
-        buttonPrevious.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        oldPosition = position;
-                        position--;
-                        fillForm();
-                    }
-                }
-        );
-
-        // настраиваем поведение RadioGroup
-        variants.setOnCheckedChangeListener(
-                new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                        // сохранение ответа пользователя
-                        questions.get(position).setUserAnswer(checkedId);
-
-                        // обновление доступности кнопок
-                        buttonPrevious.setEnabled(position != 0 && questions.get(position - 1).getUserAnswer() != -1);
-                        buttonCheck.setEnabled(questions.get(position).getUserAnswer() != -1);
-                        buttonNext.setEnabled((position != questions.size() - 1) && questions.get(position).getUserAnswer() != -1);
-
-                    }
-                }
-        );
 
         Log.d(TAG, "    init rotate counter = " + rotate);
         Log.d(TAG, "    looking for counter old value");
@@ -132,6 +84,32 @@ public class ExamActivity extends AppCompatActivity {
             Log.d(TAG, "    savedInstanceState == null");
         }
         Log.d(TAG, "    actual rotate counter = " + rotate);
+    }
+
+    private void btnNext(View view) {
+        oldPosition = position;
+        position++;
+        fillForm();
+    }
+
+    private void btnCheck(View view) {
+        showAnswer();
+    }
+
+    private void btnPrevious(View view) {
+        oldPosition = position;
+        position--;
+        fillForm();
+    }
+
+    private void rBtnChange(RadioGroup group, int checkedId) {
+        // сохранение ответа пользователя
+        questions.get(position).setUserAnswer(checkedId);
+
+        // обновление доступности кнопок
+        buttonPrevious.setEnabled(position != 0 && questions.get(position - 1).getUserAnswer() != -1);
+        buttonCheck.setEnabled(questions.get(position).getUserAnswer() != -1);
+        buttonNext.setEnabled((position != questions.size() - 1) && questions.get(position).getUserAnswer() != -1);
     }
 
     private void fillForm() {
