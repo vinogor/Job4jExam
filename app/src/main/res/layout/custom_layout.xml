@@ -195,14 +195,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/btn_back" />
+                android:text="@string/btn_previous" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/btn_forward" />
+                android:text="@string/btn_next" />
         </LinearLayout>
 
     </LinearLayout>

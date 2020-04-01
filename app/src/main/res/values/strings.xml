@@ -8,8 +8,8 @@
     <string name="rb_2">ответ 2</string>
     <string name="rb_3">ответ 3</string>
     <string name="rb_4">ответ 4</string>
-    <string name="btn_back">назад</string>
-    <string name="btn_forward">далее</string>
+    <string name="btn_previous">назад</string>
+    <string name="btn_next">далее</string>
 
     <string name="tv_select_area">Выберите область</string>
     <string name="domain_prompt">Выберите область</string>
@@ -33,4 +33,5 @@
     <string name="et_hint_pressure">Атмосферное давление</string>
     <string name="tv_report_number">Номер отчета</string>
     <string name="et_hint_report_number">Номер отчета</string>
+    <string name="btn_check_answer">проверить</string>
 </resources>
