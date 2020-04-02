@@ -9,6 +9,8 @@ public final class QuestionStore {
     private static final QuestionStore INST = new QuestionStore();
 
     private List<Question> questions = new ArrayList<>();
+    private int position = 0;     // текущий номер вопроса
+    private int oldPosition = 0;  // предыдущий номер вопроса
 
     private QuestionStore() {
         questions.add(new Question(
@@ -48,5 +50,23 @@ public final class QuestionStore {
 
     public int size() {
         return questions.size();
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void incPosition() {
+        oldPosition = position;
+        position++;
+    }
+
+    public void decPosition() {
+        oldPosition = position;
+        position--;
+    }
+
+    public int getOldPosition() {
+        return oldPosition;
     }
 }

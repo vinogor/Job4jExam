@@ -1,9 +1,10 @@
-package ru.job4j.exam;
+package ru.job4j.exam.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -11,22 +12,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
+import ru.job4j.exam.HintActivity;
+import ru.job4j.exam.R;
+import ru.job4j.exam.ResultActivity;
 import ru.job4j.exam.store.Option;
 import ru.job4j.exam.store.Question;
 import ru.job4j.exam.store.QuestionStore;
 
-public class ExamActivity extends AppCompatActivity {
+public class QuestionFragment extends Fragment {
 
     static final String HINT_FOR = "hint_for";
     static final String RESULT_FOR = "result_for";
-    private static final String TAG = "ExamActivity";
     private final QuestionStore store = QuestionStore.getInstance();
     private final int size = store.size();
-    private int rotate = 0;
-    private int position = 0;     // текущий номер вопроса
-    private int oldPosition = 0;  // предыдущий номер вопроса
 
     private Button buttonPrevious;
     private Button buttonNext;
@@ -35,18 +36,18 @@ public class ExamActivity extends AppCompatActivity {
     private RadioGroup variants;
     private TextView tvQuestion;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
-        setContentView(R.layout.activity_exam);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        buttonPrevious = findViewById(R.id.button_previous);
-        buttonCheck = findViewById(R.id.button_check);
-        buttonHint = findViewById(R.id.hint);
-        buttonNext = findViewById(R.id.button_next);
-        variants = findViewById((R.id.variants));
-        tvQuestion = findViewById(R.id.question);
+        View view = inflater.inflate(R.layout.activity_exam, container, false);
+
+        buttonPrevious = view.findViewById(R.id.button_previous);
+        buttonCheck = view.findViewById(R.id.button_check);
+        buttonHint = view.findViewById(R.id.hint);
+        buttonNext = view.findViewById(R.id.button_next);
+        variants = view.findViewById((R.id.variants));
+        tvQuestion = view.findViewById(R.id.question);
 
         buttonPrevious.setEnabled(false);
         buttonCheck.setEnabled(false);
@@ -60,19 +61,11 @@ public class ExamActivity extends AppCompatActivity {
 
         this.fillForm();
 
-        Log.d(TAG, "    init rotate counter = " + rotate);
-        Log.d(TAG, "    looking for counter old value");
-        if (savedInstanceState != null) {
-            rotate = savedInstanceState.getInt("rotate");
-        } else {
-            Log.d(TAG, "    savedInstanceState == null");
-        }
-        Log.d(TAG, "    actual rotate counter = " + rotate);
+        return view;
     }
 
     private void btnPrevious(View view) {
-        oldPosition = position;
-        position--;
+        store.decPosition();
         fillForm();
     }
 
@@ -81,18 +74,17 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void btnHint(View view) {
-        Intent intent = new Intent(ExamActivity.this, HintActivity.class);
-        intent.putExtra(HINT_FOR, position);
+        Intent intent = new Intent(getActivity(), HintActivity.class);
+        intent.putExtra(HINT_FOR, store.getPosition());
         startActivity(intent);
     }
 
     private void btnNext(View view) {
-        oldPosition = position;
-        position++;
+        store.incPosition();
 
-        // если вопрос последний то ДАЛЕЕ ведёт к подведению итогов
-        if (position == size) {
-            Intent intent = new Intent(ExamActivity.this, ResultActivity.class);
+        // если вопрос последний то кн. ДАЛЕЕ ведёт к подведению итогов
+        if (store.getPosition() == size) {
+            Intent intent = new Intent(getActivity(), ResultActivity.class);
             StringBuilder sb = new StringBuilder();
             int counter = 0;
 
@@ -109,7 +101,9 @@ public class ExamActivity extends AppCompatActivity {
                     counter++;
                 }
             }
-            sb.append("Итого верно: ").append(counter).append(" из ").append(size).append(" вопросов");
+            sb
+                    .append(System.lineSeparator()).append("Итого верно: ").append(counter)
+                    .append(" из ").append(size).append(" вопросов");
             intent.putExtra(RESULT_FOR, sb.toString());
             startActivity(intent);
         } else {
@@ -118,6 +112,9 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void rBtnChange(RadioGroup group, int checkedId) {
+
+        int position = store.getPosition();
+
         // сохранение ответа пользователя
         store.get(position).setUserAnswer(checkedId);
 
@@ -128,9 +125,11 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void fillForm() {
+        int position = store.getPosition();
+        int oldPosition = store.getOldPosition();
 
         // получаем объект вопроса по текущему номеру вопроса
-        Question question = this.store.get(this.position);
+        Question question = this.store.get(position);
         // прописываем текст вопроса на экране
         tvQuestion.setText(question.getText());
 
@@ -151,69 +150,19 @@ public class ExamActivity extends AppCompatActivity {
         // но надо обновить доступность кнопок НАЗАД и ДАЛЕЕ при крайних вариантах
         if (answer != -1 && answer == store.get(oldPosition).getUserAnswer()) {
             buttonPrevious.setEnabled(position != 0);
-            buttonNext.setEnabled(position != size - 1);
+            // теперь ДАЛЕЕ вадёт к итогам, а не блочится
+            // buttonNext.setEnabled(position != size - 1);
         }
     }
 
     private void showAnswer() {
         int id = variants.getCheckedRadioButtonId();
-        Question question = this.store.get(this.position);
+        int position = store.getPosition();
+        Question question = this.store.get(position);
         Toast.makeText(
-                this,
+                getActivity(),
                 "Your answer is " + id + ", correct is " + question.getRightAnswer(),
                 Toast.LENGTH_SHORT
         ).show();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "onRestart");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.d(TAG, "onRestoreInstanceState");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState");
-        rotate++;
-        Log.d(TAG, "    rotate counter +1 = " + rotate);
-        outState.putInt("rotate", rotate);
-        Log.d(TAG, "    saved in bundle");
     }
 }
