@@ -34,4 +34,5 @@
     <string name="tv_report_number">Report number</string>
     <string name="et_hint_report_number">Report number</string>
     <string name="btn_check_answer">check answer</string>
+    <string name="btn_advice">advice</string>
 </resources>

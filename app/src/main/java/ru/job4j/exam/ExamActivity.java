@@ -1,5 +1,6 @@
 package ru.job4j.exam;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,14 +19,18 @@ import ru.job4j.exam.store.QuestionStore;
 
 public class ExamActivity extends AppCompatActivity {
 
+    static final String HINT_FOR = "hint_for";
+    static final String RESULT_FOR = "result_for";
     private static final String TAG = "ExamActivity";
     private final QuestionStore store = QuestionStore.getInstance();
+    private final int size = store.size();
     private int rotate = 0;
     private int position = 0;     // текущий номер вопроса
     private int oldPosition = 0;  // предыдущий номер вопроса
 
     private Button buttonPrevious;
     private Button buttonNext;
+    private Button buttonHint;
     private Button buttonCheck;
     private RadioGroup variants;
     private TextView tvQuestion;
@@ -36,9 +41,9 @@ public class ExamActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_exam);
 
-
         buttonPrevious = findViewById(R.id.button_previous);
         buttonCheck = findViewById(R.id.button_check);
+        buttonHint = findViewById(R.id.hint);
         buttonNext = findViewById(R.id.button_next);
         variants = findViewById((R.id.variants));
         tvQuestion = findViewById(R.id.question);
@@ -47,9 +52,10 @@ public class ExamActivity extends AppCompatActivity {
         buttonCheck.setEnabled(false);
         buttonNext.setEnabled(false);
 
-        buttonNext.setOnClickListener(this::btnNext);
-        buttonCheck.setOnClickListener(this::btnCheck);
         buttonPrevious.setOnClickListener(this::btnPrevious);
+        buttonCheck.setOnClickListener(this::btnCheck);
+        buttonHint.setOnClickListener(this::btnHint);
+        buttonNext.setOnClickListener(this::btnNext);
         variants.setOnCheckedChangeListener(this::rBtnChange);
 
         this.fillForm();
@@ -64,9 +70,9 @@ public class ExamActivity extends AppCompatActivity {
         Log.d(TAG, "    actual rotate counter = " + rotate);
     }
 
-    private void btnNext(View view) {
+    private void btnPrevious(View view) {
         oldPosition = position;
-        position++;
+        position--;
         fillForm();
     }
 
@@ -74,10 +80,41 @@ public class ExamActivity extends AppCompatActivity {
         showAnswer();
     }
 
-    private void btnPrevious(View view) {
+    private void btnHint(View view) {
+        Intent intent = new Intent(ExamActivity.this, HintActivity.class);
+        intent.putExtra(HINT_FOR, position);
+        startActivity(intent);
+    }
+
+    private void btnNext(View view) {
         oldPosition = position;
-        position--;
-        fillForm();
+        position++;
+
+        // если вопрос последний то ДАЛЕЕ ведёт к подведению итогов
+        if (position == size) {
+            Intent intent = new Intent(ExamActivity.this, ResultActivity.class);
+            StringBuilder sb = new StringBuilder();
+            int counter = 0;
+
+            for (int i = 0; i < size; i++) {
+                Question question = store.get(i);
+                int userAnswer = question.getUserAnswer();
+                int rightAnswer = question.getRightAnswer();
+                sb
+                        .append("Вопрос ").append(i + 1)
+                        .append(": ваш ответ - ").append(userAnswer)
+                        .append(", верный ответ - ").append(rightAnswer)
+                        .append(System.lineSeparator());
+                if (userAnswer == rightAnswer) {
+                    counter++;
+                }
+            }
+            sb.append("Итого верно: ").append(counter).append(" из ").append(size).append(" вопросов");
+            intent.putExtra(RESULT_FOR, sb.toString());
+            startActivity(intent);
+        } else {
+            fillForm();
+        }
     }
 
     private void rBtnChange(RadioGroup group, int checkedId) {
@@ -87,7 +124,7 @@ public class ExamActivity extends AppCompatActivity {
         // обновление доступности кнопок
         buttonPrevious.setEnabled(position != 0 && store.get(position - 1).getUserAnswer() != -1);
         buttonCheck.setEnabled(store.get(position).getUserAnswer() != -1);
-        buttonNext.setEnabled((position != store.size() - 1) && store.get(position).getUserAnswer() != -1);
+        buttonNext.setEnabled(store.get(position).getUserAnswer() != -1);
     }
 
     private void fillForm() {
@@ -112,9 +149,9 @@ public class ExamActivity extends AppCompatActivity {
 
         // если ответ такой же, что и был в предыдущем вопросе, то событие не сработает!
         // но надо обновить доступность кнопок НАЗАД и ДАЛЕЕ при крайних вариантах
-        if (answer != -1 && answer == store.get(oldPosition).getUserAnswer() ) {
+        if (answer != -1 && answer == store.get(oldPosition).getUserAnswer()) {
             buttonPrevious.setEnabled(position != 0);
-            buttonNext.setEnabled(position != store.size() - 1);
+            buttonNext.setEnabled(position != size - 1);
         }
     }
 

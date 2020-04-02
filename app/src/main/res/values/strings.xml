@@ -34,4 +34,5 @@
     <string name="tv_report_number">Номер отчета</string>
     <string name="et_hint_report_number">Номер отчета</string>
     <string name="btn_check_answer">проверить</string>
+    <string name="btn_advice">Подсказка</string>
 </resources>
