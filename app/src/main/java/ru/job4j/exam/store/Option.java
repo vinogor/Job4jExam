@@ -1,4 +1,4 @@
-package ru.job4j.exam;
+package ru.job4j.exam.store;
 
 // вариант ответа
 public class Option {

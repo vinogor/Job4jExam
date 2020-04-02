@@ -12,40 +12,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Arrays;
-import java.util.List;
+import ru.job4j.exam.store.Option;
+import ru.job4j.exam.store.Question;
+import ru.job4j.exam.store.QuestionStore;
 
 public class ExamActivity extends AppCompatActivity {
 
     private static final String TAG = "ExamActivity";
+    private final QuestionStore store = QuestionStore.getInstance();
     private int rotate = 0;
     private int position = 0;     // текущий номер вопроса
     private int oldPosition = 0;  // предыдущий номер вопроса
-
-    // поле содержащее список вопросов
-    private final List<Question> questions = Arrays.asList(
-            new Question(
-                    1, "How many primitive variables does Java have?",
-                    Arrays.asList(
-                            new Option(1, "1.1"), new Option(2, "1.2"),
-                            new Option(3, "1.3"), new Option(4, "1.4")
-                    ), 4
-            ),
-            new Question(
-                    2, "What is Java Virtual Machine?",
-                    Arrays.asList(
-                            new Option(1, "2.1"), new Option(2, "2.2"),
-                            new Option(3, "2.3"), new Option(4, "2.4")
-                    ), 4
-            ),
-            new Question(
-                    3, "What is happen if we try unboxing null?",
-                    Arrays.asList(
-                            new Option(1, "3.1"), new Option(2, "3.2"),
-                            new Option(3, "3.3"), new Option(4, "3.4")
-                    ), 4
-            )
-    );
 
     private Button buttonPrevious;
     private Button buttonNext;
@@ -58,6 +35,7 @@ public class ExamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_exam);
+
 
         buttonPrevious = findViewById(R.id.button_previous);
         buttonCheck = findViewById(R.id.button_check);
@@ -104,18 +82,18 @@ public class ExamActivity extends AppCompatActivity {
 
     private void rBtnChange(RadioGroup group, int checkedId) {
         // сохранение ответа пользователя
-        questions.get(position).setUserAnswer(checkedId);
+        store.get(position).setUserAnswer(checkedId);
 
         // обновление доступности кнопок
-        buttonPrevious.setEnabled(position != 0 && questions.get(position - 1).getUserAnswer() != -1);
-        buttonCheck.setEnabled(questions.get(position).getUserAnswer() != -1);
-        buttonNext.setEnabled((position != questions.size() - 1) && questions.get(position).getUserAnswer() != -1);
+        buttonPrevious.setEnabled(position != 0 && store.get(position - 1).getUserAnswer() != -1);
+        buttonCheck.setEnabled(store.get(position).getUserAnswer() != -1);
+        buttonNext.setEnabled((position != store.size() - 1) && store.get(position).getUserAnswer() != -1);
     }
 
     private void fillForm() {
 
         // получаем объект вопроса по текущему номеру вопроса
-        Question question = this.questions.get(this.position);
+        Question question = this.store.get(this.position);
         // прописываем текст вопроса на экране
         tvQuestion.setText(question.getText());
 
@@ -128,21 +106,21 @@ public class ExamActivity extends AppCompatActivity {
         }
 
         // получаем сохранённый ранее ответ
-        int answer = questions.get(position).getUserAnswer();
+        int answer = store.get(position).getUserAnswer();
         // устанавливаем его
         variants.check(answer);
 
         // если ответ такой же, что и был в предыдущем вопросе, то событие не сработает!
         // но надо обновить доступность кнопок НАЗАД и ДАЛЕЕ при крайних вариантах
-        if (answer == questions.get(oldPosition).getUserAnswer()) {
+        if (answer != -1 && answer == store.get(oldPosition).getUserAnswer() ) {
             buttonPrevious.setEnabled(position != 0);
-            buttonNext.setEnabled(position != questions.size() - 1);
+            buttonNext.setEnabled(position != store.size() - 1);
         }
     }
 
     private void showAnswer() {
         int id = variants.getCheckedRadioButtonId();
-        Question question = this.questions.get(this.position);
+        Question question = this.store.get(this.position);
         Toast.makeText(
                 this,
                 "Your answer is " + id + ", correct is " + question.getRightAnswer(),
