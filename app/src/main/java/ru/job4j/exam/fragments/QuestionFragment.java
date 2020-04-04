@@ -22,10 +22,12 @@ import ru.job4j.exam.store.Option;
 import ru.job4j.exam.store.Question;
 import ru.job4j.exam.store.QuestionStore;
 
+import static ru.job4j.exam.QuestionActivity.HINT_FOR;
+import static ru.job4j.exam.QuestionActivity.RESULT_FOR;
+
 public class QuestionFragment extends Fragment {
 
-    static final String HINT_FOR = "hint_for";
-    static final String RESULT_FOR = "result_for";
+
     private final QuestionStore store = QuestionStore.getInstance();
     private final int size = store.size();
 

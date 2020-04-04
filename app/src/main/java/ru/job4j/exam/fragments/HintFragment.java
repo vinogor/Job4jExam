@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import ru.job4j.exam.R;
 import ru.job4j.exam.store.QuestionStore;
 
-import static ru.job4j.exam.fragments.QuestionFragment.HINT_FOR;
+import static ru.job4j.exam.QuestionActivity.HINT_FOR;
 
 public class HintFragment extends Fragment {
 
@@ -29,7 +29,7 @@ public class HintFragment extends Fragment {
         Button btnBack = view.findViewById(R.id.hint_back);
         btnBack.setOnClickListener(this::btnBack);
 
-        int question = getActivity().getIntent().getIntExtra(HINT_FOR, 0);
+        int question = getArguments().getInt(HINT_FOR, 0);
 
         TextView textQuestion = view.findViewById(R.id.question);
         textQuestion.setText(this.store.get(question).getText());
@@ -40,7 +40,15 @@ public class HintFragment extends Fragment {
         return view;
     }
 
+    public static HintFragment of(int index) {
+        HintFragment hint = new HintFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(HINT_FOR, index);
+        hint.setArguments(bundle);
+        return hint;
+    }
+
     private void btnBack(View view) {
-        getActivity().onBackPressed();
+        getActivity().onBackPressed(); // а тут будем как то отвязываться от родительского активити?
     }
 }

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import ru.job4j.exam.R;
 
-import static ru.job4j.exam.fragments.QuestionFragment.RESULT_FOR;
+import static ru.job4j.exam.QuestionActivity.RESULT_FOR;
 
 public class ResultFragment extends Fragment {
 
@@ -22,11 +22,19 @@ public class ResultFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.result_layout, container, false);
 
-        String result = getActivity().getIntent().getStringExtra(RESULT_FOR);
+        String result = getArguments().getString(RESULT_FOR);
 
         TextView text = view.findViewById(R.id.text_result);
         text.setText(result);
 
         return view;
+    }
+
+    public static ResultFragment of(String result) {
+        ResultFragment hint = new ResultFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(RESULT_FOR, result);
+        hint.setArguments(bundle);
+        return hint;
     }
 }
