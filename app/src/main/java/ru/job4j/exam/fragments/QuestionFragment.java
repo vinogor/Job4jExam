@@ -2,6 +2,7 @@ package ru.job4j.exam.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import ru.job4j.exam.store.Option;
 import ru.job4j.exam.store.Question;
 import ru.job4j.exam.store.QuestionStore;
 
+import static ru.job4j.exam.BaseActivity.MY_LOG;
 import static ru.job4j.exam.QuestionActivity.HINT_FOR;
 import static ru.job4j.exam.QuestionActivity.RESULT_FOR;
 
@@ -38,9 +40,16 @@ public class QuestionFragment extends Fragment {
     private RadioGroup variants;
     private TextView tvQuestion;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(MY_LOG, "QuestionFragment - onCreate");
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(MY_LOG, "QuestionFragment - onCreateView");
 
         View view = inflater.inflate(R.layout.activity_exam, container, false);
 
@@ -166,5 +175,30 @@ public class QuestionFragment extends Fragment {
                 "Your answer is " + id + ", correct is " + question.getRightAnswer(),
                 Toast.LENGTH_SHORT
         ).show();
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(MY_LOG, "QuestionFragment - onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(MY_LOG, "QuestionFragment - onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(MY_LOG, "QuestionFragment - onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(MY_LOG, "QuestionFragment - onDetach");
     }
 }

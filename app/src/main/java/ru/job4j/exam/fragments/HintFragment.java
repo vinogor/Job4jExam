@@ -1,6 +1,7 @@
 package ru.job4j.exam.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,23 @@ import androidx.fragment.app.Fragment;
 import ru.job4j.exam.R;
 import ru.job4j.exam.store.QuestionStore;
 
+import static ru.job4j.exam.BaseActivity.MY_LOG;
 import static ru.job4j.exam.QuestionActivity.HINT_FOR;
 
 public class HintFragment extends Fragment {
 
     private final QuestionStore store = QuestionStore.getInstance();
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(MY_LOG, "HintFragment - onCreate");
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(MY_LOG, "HintFragment - onCreateView");
 
         View view = inflater.inflate(R.layout.hint_activity, container, false);
 
@@ -50,5 +59,29 @@ public class HintFragment extends Fragment {
 
     private void btnBack(View view) {
         getActivity().onBackPressed(); // а тут будем как то отвязываться от родительского активити?
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(MY_LOG, "HintFragment - onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(MY_LOG, "HintFragment - onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(MY_LOG, "HintFragment - onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(MY_LOG, "HintFragment - onDetach");
     }
 }
